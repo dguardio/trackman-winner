@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+	<%= @trackerObject %>
+	<% @tracker["info"].each do |info|%>
+		Latitude: <%= info["latitude"] %>
+		Longitude: <%= info["longitude"] %>
+	<% end %><br>
+<div class="row">
+	<div class="col-sm-12 col-md-2 col-lg-2" style="overflow:auto; height:500px;">
+		<strong>Trackid:</strong>
+		<div>
+			<% @tracker["info"].each do |info|%>
+				Device Number: <%= info["device_id"] %>
+				Speed: <%= info["speed"] %>
+				Height Above Sea: <%= info["height_above_sea"] %>
+				Last Seen: <%= info["updated_at"] %>
+			<% end %>
+		</div>	
+	</div>
+	<!-- Display Google Map Here -->
+	<div style='width: 800px;' class="col-sm-12 col-md-10 col-lg-10">
+	  <div id="map" style='width: 1000px; height: 500px;'></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    $( document ).ready(function() { 
+      setInterval(function(){
+          $(function () {
+              $.ajax({
+                url:"http://devloc.herokuapp.com/api/devices" + <%= params[:id] %>,
+                dataType:'application/json',
+                complete: function(data){
+                result = Json.parse(data)
+                console.log(JSON.stringify(data))
+                console.log(result)
+                },
+                success:function(data){                     
+                  for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                    handler.removeMarkers(markers);
+                  }
+                  markers = [];
+                  // markers = handler.addMarkers(result);
+                  // handler.bounds.extendWith(markers);                         
+                }
+              })
+          });
+         }, 10000);    
+    handler.fitMapToBounds();
+    });
+  });  
+</script> 

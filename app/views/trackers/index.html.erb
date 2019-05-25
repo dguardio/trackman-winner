@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <%= @trackerObject %><br>
+  <%= @hash %>
+  <div class="col-sm-12 col-md-2 col-lg-2" style="overflow:auto; height:500px;">
+    <h1>Trackers</h1>
+      <% @trackerObject.each do |tracker| %>     
+        <div>Device Number <%= tracker[0] %> | <%= link_to "View Device", tracker_path(id: tracker[0]) %>  </div>
+      <% end %>
+    <br>
+
+    <%= link_to 'New Tracker', new_tracker_path %>    
+    
+  </div>
+
+
+  <!-- Display Google Map Here -->
+  <div style='width: 800px;' class="col-sm-12 col-md-10 col-lg-10">
+    <div id="map" style='width: 1000px; height: 500px;'></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    $( document ).ready(function() { 
+      setInterval(function(){
+          $(function () {
+              $.ajax({
+                url:"http://devloc.herokuapp.com/api/devices",
+                dataType:'application/json',
+                complete: function(data){
+                result = Json.parse(data)
+                console.log(JSON.stringify(data))
+                console.log(result)
+                },
+                success:function(data){                     
+                  for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                    handler.removeMarkers(markers);
+                  }
+                  markers = [];
+                  // markers = handler.addMarkers(result);
+                  // handler.bounds.extendWith(markers);                         
+                }
+              })
+          });
+         }, 10000);    
+    handler.fitMapToBounds();
+    });
+  });  
+</script> 
+
+
