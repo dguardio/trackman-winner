@@ -31,7 +31,7 @@
       setInterval(function(){
           $(function () {
               $.ajax({
-                url:"http://devloc.herokuapp.com/api/devices" + <%= params[:id] %>,
+                url:"https://devloc.herokuapp.com/api/devices" + <%= params[:id] %>,
                 dataType:'application/json',
                 complete: function(data){
                 result = Json.parse(data)
