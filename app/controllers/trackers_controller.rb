@@ -2,6 +2,7 @@ class TrackersController < ApplicationController
   # before_action :set_tracker, only: [:show, :edit, :update, :destroy]
   # GET /trackers
   # GET /trackers.json
+
   def index
     @response = HTTParty.get('http://devloc.herokuapp.com/api/devices')
     @trackers = JSON.parse(@response.body)
@@ -48,6 +49,61 @@ class TrackersController < ApplicationController
     end
     return @hash    
   end
+
+
+
+  def fetch_devices  
+    @response = HTTParty.get('http://devloc.herokuapp.com/api/devices')
+    @trackers = JSON.parse(@response.body)
+    @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
+    @trackers.each do |tracker|
+      tracker["info"].each do |info|
+        @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
+        @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
+      end
+    end
+    @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
+      marker.lat tracker[1]["latitude"]
+      marker.lng tracker[1]["longitude"]
+      # marker.picture({
+      #   url: "/images/walk.png",
+      #   width:  50,
+      #   height: 50
+      # })      
+    end
+    render json: @hash, status: :ok   
+  end
+
+  def fetch_single_device
+    @response = HTTParty.get('http://devloc.herokuapp.com/api/devices/'+ params[:id])
+    @tracker = JSON.parse(@response.body)
+    @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
+
+    @tracker["info"].each do |info|
+        @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
+        @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
+    end
+
+    @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
+      marker.lat tracker[1]["latitude"]
+      marker.lng tracker[1]["longitude"]
+      # marker.picture({
+      #   url: "/images/walk.png",
+      #   width:  50,
+      #   height: 50
+      # })
+    end
+    render json: @hash, status: :ok      
+  end
+
+
+
+
+
+
+
+
+
 
   # GET /trackers/new
   def new

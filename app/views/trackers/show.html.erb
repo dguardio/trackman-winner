@@ -18,39 +18,41 @@
 	</div>
 	<!-- Display Google Map Here -->
 	<div style='width: 800px;' class="col-sm-12 col-md-10 col-lg-10">
-	  <div id="map" style='width: 1000px; height: 500px;'></div>
+	  <div id="map" style='width: 1000px; height: 500px; /*img { max-width: none;*/ }'></div>
 	</div>
 </div>
 
+
 <script type="text/javascript">
   handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  handler.buildMap({ provider: {disableDefaultUI: true, autoZoom: true}, internal: {id: 'map'}}, function(){
     markers = handler.addMarkers(<%=raw @hash.to_json %>);
-    handler.bounds.extendWith(markers);
+    // handler.bounds.extendWith(markers);
+    handler.map.centerOn(markers[0]);
     $( document ).ready(function() { 
       setInterval(function(){
           $(function () {
               $.ajax({
-                url:"https://devloc.herokuapp.com/api/devices" + <%= params[:id] %>,
-                dataType:'application/json',
-                complete: function(data){
-                result = Json.parse(data)
-                console.log(JSON.stringify(data))
-                console.log(result)
-                },
-                success:function(data){                     
-                  for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(null);
-                    handler.removeMarkers(markers);
-                  }
+                url:"/single_device/",
+                dataType:'json',
+                data: {id: <%=raw params[:id] %>},
+                success: function(data){
+                  var results = data;
+                  results[0].lat = "11.833333";
+                  results[0].lng = "13.150000"; 
+                  console.log(results[0].lat);                                  
+                  markers[0].setMap(null);
+                  handler.removeMarkers(markers);
                   markers = [];
-                  // markers = handler.addMarkers(result);
-                  // handler.bounds.extendWith(markers);                         
+                  markers = handler.addMarkers(results);  
+                  handler.map.centerOn(markers[0]);                      
                 }
               })
           });
-         }, 10000);    
-    handler.fitMapToBounds();
+        }, 30000);  
+        handler.getMap().setZoom(18);  
     });
   });  
-</script> 
+</script>
+
+ 
