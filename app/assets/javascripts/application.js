@@ -11,13 +11,26 @@
 // about supported directives.
 //
 
+//= require jquery
+//= require jquery_ujs
 //= require jquery.min.js
 //= require jquery-migrate.min.js
+
 //= require bootstrap/bootstrap.js
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require underscore
 //= require gmaps/google
+//= require popper
+//= require material/bootstrap-material-design.min
+//= require material/plugins/perfect-scrollbar.jquery.min
+//= require material/plugins/chartist.min
+//= require material/plugins/bootstrap-notify
+//= require material/plugins/arrive.min
+//= require material/material-dashboard
+//= require material/demo
+//= require material/moment.min
+//= require_tree ./material/plugins
 //= require_tree .
+//= require_self
 
