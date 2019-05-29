@@ -2,6 +2,8 @@ class TrackersController < ApplicationController
   # before_action :set_tracker, only: [:show, :edit, :update, :destroy]
   # GET /trackers
   # GET /trackers.json
+  skip_before_action :verify_authenticity_token, :only => [:create, :update]
+
 
   def index
     @response = HTTParty.get('http://devloc.herokuapp.com/api/devices')
