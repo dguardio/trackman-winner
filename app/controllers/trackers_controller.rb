@@ -120,30 +120,26 @@ class TrackersController < ApplicationController
   # POST /trackers.json
   def create
     @tracker = Tracker.new(tracker_params)
-
-    respond_to do |format|
       if @tracker.save
-        format.html { redirect_to @tracker, notice: 'Tracker was successfully created.' }
-        format.json { render :show, status: :created, location: @tracker }
+        # format.html {redirect_to @tracker, notice: 'Tracker was successfully created.' and return}
+        render json: @tracker, status: :created
       else
-        format.html { render :new }
-        format.json { render json: @tracker.errors, status: :unprocessable_entity }
+        # format.html { render :new }
+        render json: @tracker.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /trackers/1
   # PATCH/PUT /trackers/1.json
   def update
-    respond_to do |format|
+    @tracker = Tracker.find(params[:id])
       if @tracker.update(tracker_params)
-        format.html { redirect_to @tracker, notice: 'Tracker was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tracker }
+        # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
+        render json: @tracker, status: :ok
       else
-        format.html { render :edit }
-        format.json { render json: @tracker.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        render json: @tracker.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /trackers/1
@@ -164,6 +160,19 @@ class TrackersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tracker_params
-      params.require(:tracker).permit(:trackid, :trackinfo)
+      # tracker_keys = params[:tracker].try(:fetch, :trackinfo, {}).keys
+      # params.require(:tracker).permit(:trackid, trackinfo: tracker_keys)
+      # params.require(:tracker).permit(:trackid, {:trackinfo => [:device_id, :latitude, :longitude]})
+      params.require(:tracker).permit(
+        :trackid,
+         :trackinfo => [
+          :device_id, 
+          :latitude, 
+          :longitude, 
+          :height_above_sea, 
+          :speed, 
+          :created_at, 
+          :updated_at
+        ])
     end
 end
