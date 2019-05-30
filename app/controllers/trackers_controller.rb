@@ -165,14 +165,10 @@ class TrackersController < ApplicationController
       # params.require(:tracker).permit(:trackid, {:trackinfo => [:device_id, :latitude, :longitude]})
       params.require(:tracker).permit(
         :trackid,
-         :trackinfo => [
-          :device_id, 
-          :latitude, 
-          :longitude, 
-          :height_above_sea, 
-          :speed, 
-          :created_at, 
-          :updated_at
-        ])
+        :latitude, 
+        :longitude, 
+        :height_above_sea, 
+        :speed
+        )
     end
 end

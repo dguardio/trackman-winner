@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_162829) do
+ActiveRecord::Schema.define(version: 2019_05_30_184233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,15 @@ ActiveRecord::Schema.define(version: 2019_05_28_162829) do
     t.string "trackid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "trackinfo", default: "{}", null: false
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "height_above_sea"
+    t.integer "speed"
+    t.index ["height_above_sea"], name: "index_trackers_on_height_above_sea"
+    t.index ["latitude"], name: "index_trackers_on_latitude"
+    t.index ["longitude"], name: "index_trackers_on_longitude"
+    t.index ["speed"], name: "index_trackers_on_speed"
     t.index ["trackid"], name: "index_trackers_on_trackid", unique: true
-    t.index ["trackinfo"], name: "index_trackers_on_trackinfo", using: :gin
   end
 
 end
