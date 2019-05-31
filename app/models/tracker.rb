@@ -1,4 +1,5 @@
 class Tracker < ApplicationRecord
+	has_one :location
   # validates :trackid, :uniqueness => true
 
   # def self.save_data_from_api

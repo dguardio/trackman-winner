@@ -100,13 +100,6 @@ class TrackersController < ApplicationController
 
 
 
-
-
-
-
-
-
-
   # GET /trackers/new
   def new
     @tracker = Tracker.new
@@ -123,6 +116,21 @@ class TrackersController < ApplicationController
       if @tracker.save
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully created.' and return}
         render json: @tracker, status: :created
+        # This stores the trackers location into the Historical location table 
+        # where all locations tracked by the tracker will be stored
+        @store = Location.new
+        @store.trackid = @tracker.trackid
+        @store.trackers_id = @tracker.id
+        @store.trackinfo = {
+          @tracker.created_at => {
+            "trackid" => @tracker.trackid,
+            "latitude" => @tracker.latitude, 
+            "longitude" => @tracker.longitude, 
+            "height_above_sea" => @tracker.height_above_sea, 
+            "speed" => @tracker.speed
+          }
+        }.to_json 
+        @store.save!
       else
         # format.html { render :new }
         render json: @tracker.errors, status: :unprocessable_entity
@@ -136,6 +144,19 @@ class TrackersController < ApplicationController
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
+        @store = Location.find_by(trackers_id: @tracker.id)
+        original_json = @store.trackinfo
+        new_json = {
+          @tracker.updated_at => {
+            "trackid" => @tracker.trackid,
+            "latitude" => @tracker.latitude, 
+            "longitude" => @tracker.longitude, 
+            "height_above_sea" => @tracker.height_above_sea, 
+            "speed" => @tracker.speed
+          }
+        }
+        @store.trackinfo = original_json.merge!(new_json)
+        @store.save!        
       else
         # format.html { render :edit }
         render json: @tracker.errors, status: :unprocessable_entity
