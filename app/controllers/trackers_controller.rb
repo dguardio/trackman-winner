@@ -145,7 +145,7 @@ class TrackersController < ApplicationController
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
         @store = Location.find_by(trackers_id: @tracker.id)
-        original_json = @store.trackinfo
+        original_json = @store.trackinfo.to_json
         new_json = {
           @tracker.updated_at => {
             "trackid" => @tracker.trackid,
@@ -154,7 +154,7 @@ class TrackersController < ApplicationController
             "height_above_sea" => @tracker.height_above_sea, 
             "speed" => @tracker.speed
           }
-        }
+        }.to_json
         @store.trackinfo = original_json.merge!(new_json)
         @store.save!        
       else
