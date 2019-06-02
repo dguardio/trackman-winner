@@ -145,7 +145,7 @@ class TrackersController < ApplicationController
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
         @store = Location.find_by(trackers_id: @tracker.id)
-        original_json = eval(@store.trackinfo)
+        original_json = @store.trackinfo
         new_json = {
           @tracker.updated_at => {
             "trackid" => @tracker.trackid,
