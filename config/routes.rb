@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :trackers
+  resources :trackers do
+  	post '', to: 'trackers#update'
+  end
 
   get 'get_devices', to: 'trackers#fetch_devices'
   get 'single_device', to: 'trackers#fetch_single_device'

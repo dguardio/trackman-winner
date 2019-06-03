@@ -140,7 +140,7 @@ class TrackersController < ApplicationController
   # PATCH/PUT /trackers/1
   # PATCH/PUT /trackers/1.json
   def update
-    @tracker = Tracker.find(params[:id])
+    @tracker = Tracker.find(params[:tracker_id])
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
