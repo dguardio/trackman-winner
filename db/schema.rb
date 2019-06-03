@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_02_154236) do
+ActiveRecord::Schema.define(version: 2019_06_03_034443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_06_02_154236) do
     t.index ["latitude"], name: "index_trackers_on_latitude"
     t.index ["longitude"], name: "index_trackers_on_longitude"
     t.index ["speed"], name: "index_trackers_on_speed"
-    t.index ["trackid"], name: "index_trackers_on_trackid", unique: true
+    t.index ["trackid"], name: "index_trackers_on_trackid"
   end
 
   add_foreign_key "locations", "trackers", column: "trackers_id"
