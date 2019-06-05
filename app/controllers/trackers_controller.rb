@@ -144,7 +144,7 @@ class TrackersController < ApplicationController
         # where all locations tracked by the tracker will be stored
         @store = Location.new
         @store.trackid = @tracker.trackid
-        @store.trackers_id = @tracker.id
+        @store.tracker_id = @tracker.id
         @store.trackinfo = {
           @tracker.created_at => {
             "trackid" => @tracker.trackid,
@@ -164,11 +164,11 @@ class TrackersController < ApplicationController
   # PATCH/PUT /trackers/1
   # PATCH/PUT /trackers/1.json
   def update
-    @tracker = Tracker.find_by(params[:trackid])
+    @tracker = Tracker.find(params[:tracker_id])
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
-        @store = Location.find_by(trackers_id: @tracker.id)
+        @store = Location.find_by(tracker_id: @tracker.id)
         original_json = @store.trackinfo
         new_json = {
           @tracker.updated_at => {
