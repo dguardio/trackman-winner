@@ -25,6 +25,18 @@ class TrackersController < ApplicationController
       # })      
     end
     return @hash
+# For DB Querying once move is made to leave API
+    # @trackers = Tracker.all
+    # @hash = Gmaps4rails.build_markers(@trackers) do |tracker, marker|
+    #   marker.lat tracker.latitude
+    #   marker.lng tracker.longitude
+    #   # marker.picture({
+    #   #   url: "/images/walk.png",
+    #   #   width:  50,
+    #   #   height: 50
+    #   # })      
+    # end
+    # return @hash        
   end
 
   # GET /trackers/1
@@ -49,7 +61,19 @@ class TrackersController < ApplicationController
       #   height: 50
       # })
     end
-    return @hash    
+    return @hash 
+# For DB Querying once move is made to leave API
+    # @tracker = Tracker.find(params[:id])   
+    # @hash = Gmaps4rails.build_markers(@tracker) do |tracker, marker|
+    #   marker.lat tracker.latitude
+    #   marker.lng tracker.longitude
+    #   # marker.picture({
+    #   #   url: "/images/walk.png",
+    #   #   width:  50,
+    #   #   height: 50
+    #   # })
+    # end
+    # return @hash     
   end
 
 
@@ -140,7 +164,7 @@ class TrackersController < ApplicationController
   # PATCH/PUT /trackers/1
   # PATCH/PUT /trackers/1.json
   def update
-    @tracker = Tracker.find(params[:tracker_id])
+    @tracker = Tracker.find_by(params[:trackid])
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok

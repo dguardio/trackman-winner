@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_03_034443) do
+ActiveRecord::Schema.define(version: 2019_06_05_185807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2019_06_03_034443) do
     t.string "trackid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "trackers_id"
+    t.bigint "tracker_id"
     t.jsonb "trackinfo", default: {}, null: false
-    t.index ["trackers_id"], name: "index_locations_on_trackers_id"
+    t.index ["tracker_id"], name: "index_locations_on_tracker_id"
   end
 
   create_table "trackers", force: :cascade do |t|
@@ -39,5 +39,5 @@ ActiveRecord::Schema.define(version: 2019_06_03_034443) do
     t.index ["trackid"], name: "index_trackers_on_trackid"
   end
 
-  add_foreign_key "locations", "trackers", column: "trackers_id"
+  add_foreign_key "locations", "trackers"
 end

@@ -50,7 +50,18 @@
                   handler.removeMarkers(markers);
                   markers = [];
                   markers = handler.addMarkers(results);  
-                  handler.map.centerOn(markers[0]);                      
+                  handler.map.centerOn(markers[0]); 
+
+     //              url:"/trackers/" + <%=raw params[:id] %> ,
+     //              dataType: 'json',
+				 //  success: function(data){
+					// var results = data;
+					// console.log(results.lat);                                  
+					// markers[0].setMap(null);
+					// handler.removeMarkers(markers);
+					// markers = [];
+					// markers = handler.addMarkers(results);  
+					// handler.map.centerOn(markers[0]);                  
                 }
               })
           });
