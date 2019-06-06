@@ -40,10 +40,7 @@
                 dataType:'json',
                 data: {id: <%=raw params[:id] %>},
                 success: function(data){
-                  var results = data;
-                  results[0].lat = "11.833333";
-                  results[0].lng = "13.150000"; 
-                  console.log(results[0].lat);                                  
+                  var results = data;                                  
                   markers[0].setMap(null);
                   handler.removeMarkers(markers);
                   markers = [];
