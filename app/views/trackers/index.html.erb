@@ -2,12 +2,12 @@
       <p id="notice"><%= notice %></p>   
       <div class="row" style="padding-top: 70px;">
         <div style='width: 100%; overflow: auto;'>
-          <ul class="nav">
+          <ul class="nav" style="overflow-x: scroll; overflow-y: hidden; white-space: nowrap;">
             <li class="nav-item"> 
-            <% @trackerObject.each do |tracker| %>  
-                <%= link_to tracker_path(id: tracker[0]), class:"nav-link",style:"float: left;" do %>
+            <% @trackers.each do |tracker| %>  
+                <%= link_to tracker_path(id: tracker.id), class:"nav-link",style:"float: left;" do %>
                    <i class="material-icons" style="float: left;">commute</i> 
-                   <p style="float: left;">Device <%= tracker[0] %></p>
+                   <p style="float: left;">Device <%= tracker.trackid %></p>
                 <% end %>
             <% end %>
             </li>

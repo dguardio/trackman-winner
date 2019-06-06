@@ -1,25 +1,23 @@
 <p id="notice"><%= notice %></p>
 <div class="row" style="padding-top: 70px;">
 	<div style='width: 100%; overflow: auto;'>
-	  <ul class="nav">
-		<% @tracker["info"].each do |info|%>	  	
-	    	<li class="nav-item" style="float:left;"> 
-	           <i class="material-icons" style="float: left;">commute</i> 
-	           <p class="nav-link" style="float: left;">Device <%= info["device_id"] %></p>
-	    	</li>
-	    	<li class="nav-item" style="float:left;"> 
-	           <i class="material-icons" style="float: left;">flight_takeoff</i> 
-	           <p class="nav-link" style="float: left;">Speed: <%= info["speed"] %></p>
-	    	</li>
-	    	<li class="nav-item" style="float:left;"> 
-	           <i class="material-icons" style="float: left;">business</i> 
-	           <p class="nav-link" style="float: left;">Height Above Sea: <%= info["height_above_sea"] %></p>
-	    	</li>		    		    	
-	    	<li class="nav-item" style="float:left;"> 
-	           <i class="material-icons" style="float: left;">schedule</i> 
-	           <p class="nav-link" style="float: left;">Last Seen: <%= info["updated_at"] %></p>
-	    	</li>				    	
-	    <% end %>
+	  <ul class="nav">	  	
+    	<li class="nav-item" style="float:left;"> 
+           <i class="material-icons" style="float: left;">commute</i> 
+           <p class="nav-link" style="float: left;">Device <%= @tracker.trackid %></p>
+    	</li>
+    	<li class="nav-item" style="float:left;"> 
+           <i class="material-icons" style="float: left;">flight_takeoff</i> 
+           <p class="nav-link" style="float: left;">Speed: <%= @tracker.speed %></p>
+    	</li>
+    	<li class="nav-item" style="float:left;"> 
+           <i class="material-icons" style="float: left;">business</i> 
+           <p class="nav-link" style="float: left;">Height Above Sea: <%= @tracker.height_above_sea %></p>
+    	</li>		    		    	
+    	<li class="nav-item" style="float:left;"> 
+           <i class="material-icons" style="float: left;">schedule</i> 
+           <p class="nav-link" style="float: left;">Last Seen: <%= @tracker.updated_at %></p>
+    	</li>				    	
 	  </ul>
 	</div>
 	<!-- Display Google Map Here -->
