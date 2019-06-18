@@ -193,18 +193,7 @@ class TrackersController < ApplicationController
   # PATCH/PUT /trackers/1
   # PATCH/PUT /trackers/1.json
   def update
-    @tracker = Tracker.find(params[:tracker_id])
-    @latitude = params[:latitude].to_f
-    @longitude = params[:longitude].to_f
-    @tempLat = @latitude/100
-    @floatLat = (@latitude - (@tempLat * 100))/60
-    @lat = @tempLat + @floatLat
-    @tempLng = @longitude/100
-    @floatLng = (@longitude - (@tempLng * 100))/60
-    @lng = @tempLng + @floatLng
-    params[:latitude] ||= @lat.to_s 
-    params[:longitude] ||= @lng.to_s  
-    console.log(tracker_params)  
+    @tracker = Tracker.find(params[:tracker_id])  
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
