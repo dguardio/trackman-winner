@@ -203,7 +203,8 @@ class TrackersController < ApplicationController
     @floatLng = (@longitude - (@tempLng * 100))/60
     @lng = @tempLng + @floatLng
     params[:latitude] ||= @lat.to_s 
-    params[:longitude] ||= @lng.to_s    
+    params[:longitude] ||= @lng.to_s  
+    console.log(tracker_params)  
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
