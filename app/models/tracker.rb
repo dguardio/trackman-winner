@@ -9,11 +9,11 @@ def transform_data
   latitude = self.latitude
   longitude = self.longitude
   tempLat = latitude/100
-  floatLat = (latitude - (tempLat * 100))/60
-  lat = tempLat + floatLat
+  floatLat = (latitude - (tempLat.to_i * 100))/60
+  lat = tempLat.to_i + floatLat
   tempLng = longitude/100
-  floatLng = (longitude - (tempLng * 100))/60
-  lng = tempLng + floatLng
+  floatLng = (longitude - (tempLng.to_i * 100))/60
+  lng = tempLng.to_i + floatLng
   self.latitude = lat 
   self.longitude = lng  
 end
