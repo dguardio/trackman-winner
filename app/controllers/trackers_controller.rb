@@ -39,6 +39,10 @@ class TrackersController < ApplicationController
     return @hash        
   end
 
+  def trackers_index
+    @trackers = Tracker.all
+  end
+
   # GET /trackers/1
   # GET /trackers/1.json
   def show
@@ -155,6 +159,7 @@ class TrackersController < ApplicationController
 
   # GET /trackers/1/edit
   def edit
+    @tracker = Tracker.find(params[:id])
   end
 
   # POST /trackers
@@ -189,6 +194,16 @@ class TrackersController < ApplicationController
   # PATCH/PUT /trackers/1.json
   def update
     @tracker = Tracker.find(params[:tracker_id])
+    @latitude = params[:latitude].to_f
+    @longitude = params[:longitude].to_f
+    @tempLat = @latitude/100
+    @floatLat = (@latitude - (@tempLat * 100))/60
+    @lat = @tempLat + @floatLat
+    @tempLng = @longitude/100
+    @floatLng = (@longitude - (@tempLng * 100))/60
+    @lng = @tempLng + @floatLng
+    params[:latitude] ||= @lat.to_s 
+    params[:longitude] ||= @lng.to_s    
       if @tracker.update(tracker_params)
         # format.html {redirect_to @tracker, notice: 'Tracker was successfully updated.' and return}
         render json: @tracker, status: :ok
@@ -214,6 +229,7 @@ class TrackersController < ApplicationController
   # DELETE /trackers/1
   # DELETE /trackers/1.json
   def destroy
+    @tracker = Tracker.find(params[:id]) 
     @tracker.destroy
     respond_to do |format|
       format.html { redirect_to trackers_url, notice: 'Tracker was successfully destroyed.' }

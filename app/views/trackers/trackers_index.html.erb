@@ -1,0 +1,38 @@
+
+<div class="row" style="padding-top: 70px;">
+
+	<table class="table" style="padding-top: 70px;">
+	    <thead>
+	        <tr>
+	            <th class="text-center">Device</th>
+	            <th>Latitude</th>
+	            <th>Last Seen</th>
+	            <th>HAS</th>
+	            <th class="text-right">Speed</th>
+	            <th class="text-right">Actions</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+		<% @trackers.each do |tracker| %>    	
+	        <tr>
+	            <td class="text-center"><%= tracker.trackid	%></td>
+	            <td> <%= tracker.latitude %> </td>
+	            <td><%= tracker.updated_at %></td>
+	            <td><%= tracker.height_above_sea %>ft </td>
+	            <td class="text-right"> <%= tracker.speed %>km/h</td>
+	            <td class="td-actions text-right">
+	                <%= link_to tracker_path(id: tracker.id), class:"btn btn-info", rel:"tooltip" do %>
+	                    <i class="material-icons">person</i>
+	                <% end %>
+<!-- 	                # <%= link_to edit_tracker_path(id: tracker.id), class:"btn btn-success", rel:"tooltip" do %>
+	                    <i class="material-icons">edit</i>
+	                # <% end %> -->
+	                <%= link_to tracker_path(id: tracker.id), class:"btn btn-danger", rel:"tooltip", method: :delete, data: {confirm: "Are you sure you want to delete this Tracker permanently?"} do %>
+	                    <i class="material-icons">delete</i>
+	                <% end %>	                	                
+	            </td>
+	        </tr>
+	    <% end %> 
+	    </tbody>
+	</table>
+</div>

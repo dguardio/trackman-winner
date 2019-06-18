@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start lat:</strong>
+  <%= @trip.start_lat %>
+</p>
+
+<p>
+  <strong>Start lng:</strong>
+  <%= @trip.start_lng %>
+</p>
+
+<p>
+  <strong>End lat:</strong>
+  <%= @trip.end_lat %>
+</p>
+
+<p>
+  <strong>End lng:</strong>
+  <%= @trip.end_lng %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @trip.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_trip_path(@trip) %> |
+<%= link_to 'Back', trips_path %>

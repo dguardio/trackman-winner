@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_185807) do
+ActiveRecord::Schema.define(version: 2019_06_07_213520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,5 +39,18 @@ ActiveRecord::Schema.define(version: 2019_06_05_185807) do
     t.index ["trackid"], name: "index_trackers_on_trackid"
   end
 
+  create_table "trips", force: :cascade do |t|
+    t.float "start_lat"
+    t.float "start_lng"
+    t.float "end_lat"
+    t.float "end_lng"
+    t.text "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "tracker_id"
+    t.index ["tracker_id"], name: "index_trips_on_tracker_id"
+  end
+
   add_foreign_key "locations", "trackers"
+  add_foreign_key "trips", "trackers"
 end

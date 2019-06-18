@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :trips
   resources :trackers do
   	post '', to: 'trackers#update'
   end
+  get 'tracker-mgt', to: 'trackers#trackers_index'
   # post 'locator', to: 'trackers#update'
 
   get 'get_devices', to: 'trackers#fetch_devices'

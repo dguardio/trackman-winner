@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_lat: 1.5
+  start_lng: 1.5
+  end_lat: 1.5
+  end_lng: 1.5
+  remarks: MyText
+
+two:
+  start_lat: 1.5
+  start_lng: 1.5
+  end_lat: 1.5
+  end_lng: 1.5
+  remarks: MyText
