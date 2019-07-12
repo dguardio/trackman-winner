@@ -6,26 +6,6 @@ class TrackersController < ApplicationController
 
 
   def index
-    # @response = HTTParty.get('http://devloc.herokuapp.com/api/devices')
-    # @trackers = JSON.parse(@response.body)
-    # @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
-    # @trackers.each do |tracker|
-    #   tracker["info"].each do |info|
-    #     @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
-    #     @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
-    #   end
-    # end
-    # @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
-    #   marker.lat tracker[1]["latitude"]
-    #   marker.lng tracker[1]["longitude"]
-    #   # marker.picture({
-    #   #   url: "/images/walk.png",
-    #   #   width:  50,
-    #   #   height: 50
-    #   # })      
-    # end
-    # return @hash
-# For DB Querying once move is made to leave API
     @trackers = Tracker.all
     @hash = Gmaps4rails.build_markers(@trackers) do |tracker, marker|
       marker.lat tracker.latitude
@@ -46,27 +26,6 @@ class TrackersController < ApplicationController
   # GET /trackers/1
   # GET /trackers/1.json
   def show
-    # @current_tracker = params[:id]
-    # @response = HTTParty.get('http://devloc.herokuapp.com/api/devices/'+ @current_tracker)
-    # @tracker = JSON.parse(@response.body)
-    # @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
-
-    # @tracker["info"].each do |info|
-    #     @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
-    #     @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
-    # end
-
-    # @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
-    #   marker.lat tracker[1]["latitude"]
-    #   marker.lng tracker[1]["longitude"]
-    #   # marker.picture({
-    #   #   url: "/images/walk.png",
-    #   #   width:  50,
-    #   #   height: 50
-    #   # })
-    # end
-    # return @hash 
-# For DB Querying once move is made to leave API
     @tracker = Tracker.find(params[:id])   
     @hash = Gmaps4rails.build_markers(@tracker) do |tracker, marker|
       marker.lat tracker.latitude
@@ -82,27 +41,7 @@ class TrackersController < ApplicationController
 
 
 
-  def fetch_devices  
-    # @response = HTTParty.get('http://devloc.herokuapp.com/api/devices')
-    # @trackers = JSON.parse(@response.body)
-    # @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
-    # @trackers.each do |tracker|
-    #   tracker["info"].each do |info|
-    #     @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
-    #     @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
-    #   end
-    # end
-    # @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
-    #   marker.lat tracker[1]["latitude"]
-    #   marker.lng tracker[1]["longitude"]
-    #   # marker.picture({
-    #   #   url: "/images/walk.png",
-    #   #   width:  50,
-    #   #   height: 50
-    #   # })      
-    # end
-    # render json: @hash, status: :ok  
-
+  def fetch_devices   
     @trackers = Tracker.all 
     @hash = Gmaps4rails.build_markers(@trackers) do |tracker, marker|
       marker.lat tracker.latitude
@@ -117,26 +56,6 @@ class TrackersController < ApplicationController
   end
 
   def fetch_single_device
-    # @response = HTTParty.get('http://devloc.herokuapp.com/api/devices/'+ params[:id])
-    # @tracker = JSON.parse(@response.body)
-    # @trackerObject = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
-
-    # @tracker["info"].each do |info|
-    #     @trackerObject[info["device_id"]]["latitude"] = info["latitude"]
-    #     @trackerObject[info["device_id"]]["longitude"] = info["longitude"]
-    # end
-
-    # @hash = Gmaps4rails.build_markers(@trackerObject) do |tracker, marker|
-    #   marker.lat tracker[1]["latitude"]
-    #   marker.lng tracker[1]["longitude"]
-    #   # marker.picture({
-    #   #   url: "/images/walk.png",
-    #   #   width:  50,
-    #   #   height: 50
-    #   # })
-    # end
-    # render json: @hash, status: :ok 
-
     @tracker = Tracker.find(params[:id])
     @hash = Gmaps4rails.build_markers(@tracker) do |tracker, marker|
       marker.lat tracker.latitude
@@ -208,7 +127,7 @@ class TrackersController < ApplicationController
             "speed" => @tracker.speed
           }
         }
-        @store.trackinfo = original_json.merge!(new_json)
+        @store.trackinfo = original_json.reverse_merge!(new_json)
         @store.save!        
       else
         # format.html { render :edit }
