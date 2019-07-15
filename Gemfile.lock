@@ -195,6 +195,8 @@ GEM
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
+    scopy (3.1.0)
+      activerecord (>= 4.0)
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
@@ -267,6 +269,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.3)
   sass-rails (~> 5.0)
+  scopy
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)

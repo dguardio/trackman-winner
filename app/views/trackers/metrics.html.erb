@@ -1,0 +1,95 @@
+<div class="row" style="padding-top: 70px;">
+      <div class="card card-chart">
+        <div class="card-header card-header-success">
+          <div class="ct-chart" id="lastTwentySpeedChart"></div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"> Last 20 recorded Accelerations </h4>
+          <p class="card-category">
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> updated 4 minutes ago
+          </div>
+        </div>
+      </div>
+    </div>	
+<!-- 	<div> 
+		<p> Speed Graph for Last 20 or Less Recorded Accelerations </p>
+		<div class="ct-chart"></div>
+	</div>
+	<div> 
+		<p> Speed Graph for All Recorded Accelerations </p>
+		<div class="ct-chart"></div>
+	</div> -->
+</div>
+
+<script>
+  dataLastTwentySpeedChart = {
+    labels: <%=raw @transformed_twenty_speed_keys %>,
+    series: [
+		<%=raw @last_twenty_speed_values %>    
+	]
+  };
+
+  optionsLastTwentySpeedChart = {
+    lineSmooth: Chartist.Interpolation.cardinal({
+      tension: 0
+    }),
+    low: 0,
+    high: <%=raw @last_twenty_speed_values.max %> + 10, // creative tim: we recommend you to set the high as the biggest value + something for a better look
+    chartPadding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
+  }
+
+  var lastTwentySpeedChart = new Chartist.Line('#lastTwentySpeedChart', dataLastTwentySpeedChart, optionsLastTwentySpeedChart);
+
+  startAnimationForLineChart(lastTwentySpeedChart);	
+</script>
+
+<!-- <script>
+	//Set all Data to be Displayed in the Data variable
+	var data = {
+	  // A labels array that can contain any sort of values
+	  labels: <%=raw @transformed_twenty_speed_keys %>,
+	  // Our series array that contains series objects or in this case series data arrays
+	  series: [
+	    <%=raw @last_twenty_speed_values %>
+	  ]
+	};
+	// Set all Display Options for this chart below
+	var options = {
+	  width: 600,
+	  height: 400,
+	  // Don't draw the line chart points
+	  showPoint: false,
+	  // Disable line smoothing
+	  lineSmooth: true,
+	  // X-Axis specific configuration
+	  axisX: {
+	    // We can disable the grid for this axis
+	    showGrid: false,
+	    // and also don't show the label
+	    showLabel: true
+	  },
+	  // Y-Axis specific configuration
+	  axisY: {
+	    // Lets offset the chart a bit from the labels
+	    offset: 60,
+	    // The label interpolation function enables you to modify the values
+	    // used for the labels on each axis. Here we are converting the
+	    // values into million pound.
+	    // labelInterpolationFnc: function(value) {
+	    //   return '$' + value + 'm';
+	    // }
+	  }
+	};	
+	//Instantiate the display of the 	
+	new Chartist.Line('.ct-chart', data, options);
+</script> -->

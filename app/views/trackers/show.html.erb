@@ -17,7 +17,11 @@
     	<li class="nav-item" style="float:left;"> 
            <i class="material-icons" style="float: left;">schedule</i> 
            <p class="nav-link" style="float: left;">Last Seen: <%= @tracker.updated_at %></p>
-    	</li>				    	
+    	</li>
+      <%= link_to tracker_metrics_path(tracker_id: @tracker.id), class:"nav-link",style:"float: left;" do %>
+         <i class="material-icons" style="float: left;">trending_up</i> 
+         <p style="float: left;"> Metrics for Device </p>
+      <% end %>      				    	
 	  </ul>
 	</div>
 	<!-- Display Google Map Here -->

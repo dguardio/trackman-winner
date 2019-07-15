@@ -42,6 +42,8 @@ gem 'bootstrap-sass'
 gem "jquery-rails"
 gem 'popper_js', '~> 1.12.9'
 gem 'geokit'
+gem 'scopy'
+
 
 
 # Reduces boot times through caching; required in config/boot.rb

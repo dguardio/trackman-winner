@@ -39,7 +39,39 @@ class TrackersController < ApplicationController
     return @hash     
   end
 
+  def metrics
+    @tracker = Tracker.find(params[:tracker_id])
+# All TrackInfo Gathered and stored for this Tracker 
+    @all_time_data = @tracker.location.trackinfo
+# The Keys used to access the last 20 records of this tracker stored in the Record
+    @last_twenty_data_keys = @all_time_data.keys.last(20)
+    # The keys to access all the records of this tracker stored in the Record 
+    @all_time_data_keys = @all_time_data.keys
+# The Empty GArrays to store the Speed Values for both the Last twenty saved records and the all time saved records using a loop
+    @last_twenty_speed_values = Array.new
+    @all_time_speed_values = Array.new
 
+    # Use these Arrays to Transform each Timestamp key to a date readable form
+
+    @transformed_twenty_speed_keys = Array.new
+    @transformed_all_speed_keys = Array.new
+
+    x = 0
+    while x < @last_twenty_data_keys.length
+      @last_twenty_speed_values << @all_time_data[@last_twenty_data_keys[x]]["speed"]
+      @transformed_twenty_speed_keys << Date.parse(@last_twenty_data_keys[x]).strftime("%I:%M:%S %p, %a")
+      x += 1
+    end
+    # For setting All Speeds into array to be displayed by Chartist in View
+    t = 0
+    while t < @all_time_data_keys.length
+      @all_time_speed_values << @all_time_data[@all_time_data_keys[t]]["speed"]
+      @transformed_all_speed_keys << Date.parse(@all_time_data_keys[t]).strftime("%I:%M:%S %p, %a")
+      t += 1
+    end
+    puts @transformed_twenty_speed_keys
+    puts @transformed_all_speed_keys    
+  end
 
   def fetch_devices   
     @trackers = Tracker.all 

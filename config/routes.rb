@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :trips
   resources :trackers do
   	post '', to: 'trackers#update'
+    get 'metrics', to: 'trackers#metrics'
   end
   get 'tracker-mgt', to: 'trackers#trackers_index'
   # post 'locator', to: 'trackers#update'
