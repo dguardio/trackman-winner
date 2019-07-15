@@ -1,32 +1,42 @@
 <div class="row" style="padding-top: 70px;">
-      <div class="card card-chart">
+	<!-- Display last twenty speed recordings -->
+      <div class="card card-chart col-md-12 col-lg-10">
         <div class="card-header card-header-success">
           <div class="ct-chart" id="lastTwentySpeedChart"></div>
         </div>
         <div class="card-body">
           <h4 class="card-title"> Last 20 recorded Accelerations </h4>
-          <p class="card-category">
-            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.
-          </p>
+<!--           <p class="card-category">
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> -->
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="material-icons">access_time</i> updated 4 minutes ago
+            <i class="material-icons">access_time</i> updated about <%= time_ago_in_words(@tracker.location.updated_at) %> ago
           </div>
         </div>
       </div>
-    </div>	
-<!-- 	<div> 
-		<p> Speed Graph for Last 20 or Less Recorded Accelerations </p>
-		<div class="ct-chart"></div>
-	</div>
-	<div> 
-		<p> Speed Graph for All Recorded Accelerations </p>
-		<div class="ct-chart"></div>
-	</div> -->
+
+		<!-- Display all time Speed Trend of Tracker -->
+      <div class="card card-chart col-md-12 col-lg-10">
+        <div class="card-header card-header-success">
+          <div class="ct-chart" id="allTimeSpeedChart"></div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"> All Time recorded Accelerations </h4>
+<!--           <p class="card-category">
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> -->
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> updated about <%= time_ago_in_words(@tracker.location.updated_at) %> ago
+          </div>
+        </div>
+      </div>      	
 </div>
 
 <script>
+
+// For last twenty speed chart	
   dataLastTwentySpeedChart = {
     labels: <%=raw @transformed_twenty_speed_keys %>,
     series: [
@@ -35,11 +45,21 @@
   };
 
   optionsLastTwentySpeedChart = {
+  	height: 200,
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0
     }),
     low: 0,
-    high: <%=raw @last_twenty_speed_values.max %> + 10, // creative tim: we recommend you to set the high as the biggest value + something for a better look
+    high: <%=raw @last_twenty_speed_values.max %> + (<%=raw @last_twenty_speed_values.max %> * 1/4), 
+    // creative tim: we recommend you to set the high as the biggest value + something for a better look
+
+	  axisX: {
+	    // We can disable the grid for this axis
+	    // showGrid: false,
+	    // and also don't show the label
+	    showLabel: false
+	  },
+
     chartPadding: {
       top: 0,
       right: 0,
@@ -50,7 +70,43 @@
 
   var lastTwentySpeedChart = new Chartist.Line('#lastTwentySpeedChart', dataLastTwentySpeedChart, optionsLastTwentySpeedChart);
 
-  startAnimationForLineChart(lastTwentySpeedChart);	
+  md.startAnimationForLineChart(lastTwentySpeedChart);	
+
+// For All time speed graph
+  dataAllTimeSpeedChart = {
+    labels: <%=raw @transformed_all_speed_keys %>,
+    series: [
+		<%=raw @all_time_speed_values %>    
+	]
+  };
+
+  optionsAllTimeSpeedChart = {
+  	height: 200,
+    lineSmooth: Chartist.Interpolation.cardinal({
+      tension: 0
+    }),
+    low: 0,
+    high: <%=raw @all_time_speed_values.max %> + (<%=raw @all_time_speed_values.max %> * 1/4), 
+    // creative tim: we recommend you to set the high as the biggest value + something for a better look
+
+	  axisX: {
+	    // We can disable the grid for this axis
+	    // showGrid: false,
+	    // and also don't show the label
+	    showLabel: false
+	  },
+
+    chartPadding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
+  }
+
+  var allTimeSpeedChart = new Chartist.Line('#allTimeSpeedChart', dataAllTimeSpeedChart, optionsAllTimeSpeedChart);
+
+  md.startAnimationForLineChart(allTimeSpeedChart);	
 </script>
 
 <!-- <script>

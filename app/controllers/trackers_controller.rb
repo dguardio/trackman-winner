@@ -68,9 +68,7 @@ class TrackersController < ApplicationController
       @all_time_speed_values << @all_time_data[@all_time_data_keys[t]]["speed"]
       @transformed_all_speed_keys << Date.parse(@all_time_data_keys[t]).strftime("%I:%M:%S %p, %a")
       t += 1
-    end
-    puts @transformed_twenty_speed_keys
-    puts @transformed_all_speed_keys    
+    end   
   end
 
   def fetch_devices   
