@@ -43,7 +43,7 @@ gem "jquery-rails"
 gem 'popper_js', '~> 1.12.9'
 gem 'geokit'
 gem 'scopy'
-
+gem 'rails_admin', '~> 2.0.0.beta'
 
 
 # Reduces boot times through caching; required in config/boot.rb
