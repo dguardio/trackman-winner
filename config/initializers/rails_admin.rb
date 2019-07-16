@@ -19,6 +19,12 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
+RailsAdmin.config do |config|
+  config.main_app_name = ["Track Man", "BackOffice"]
+  # or something more dynamic
+  config.main_app_name = Proc.new { |controller| [ "Track Man", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
+end
+
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true

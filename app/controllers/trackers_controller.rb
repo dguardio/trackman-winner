@@ -58,14 +58,14 @@ class TrackersController < ApplicationController
 
     x = 0
     while x < @last_twenty_data_keys.length
-      @last_twenty_speed_values << @all_time_data[@last_twenty_data_keys[x]]["speed"]
+      @last_twenty_speed_values << @all_time_data[@last_twenty_data_keys[x]]["speed"] * 1.852
       @transformed_twenty_speed_keys << Date.parse(@last_twenty_data_keys[x]).strftime("%I:%M:%S %p, %a")
       x += 1
     end
     # For setting All Speeds into array to be displayed by Chartist in View
     t = 0
     while t < @all_time_data_keys.length
-      @all_time_speed_values << @all_time_data[@all_time_data_keys[t]]["speed"]
+      @all_time_speed_values << @all_time_data[@all_time_data_keys[t]]["speed"] * 1.852
       @transformed_all_speed_keys << Date.parse(@all_time_data_keys[t]).strftime("%I:%M:%S %p, %a")
       t += 1
     end   

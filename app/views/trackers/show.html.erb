@@ -8,19 +8,18 @@
     	</li>
     	<li class="nav-item" style="float:left;"> 
            <i class="material-icons" style="float: left;">flight_takeoff</i> 
-           <p class="nav-link" style="float: left;">Speed: <%= @tracker.speed %></p>
+           <p class="nav-link" style="float: left;">Speed: <%= @tracker.speed * 1.852 %> KM/H</p>
     	</li>
     	<li class="nav-item" style="float:left;"> 
            <i class="material-icons" style="float: left;">business</i> 
-           <p class="nav-link" style="float: left;">Height Above Sea: <%= @tracker.height_above_sea %></p>
+           <p class="nav-link" style="float: left;">Height Above Sea: <%= @tracker.height_above_sea %>Metres</p>
     	</li>		    		    	
     	<li class="nav-item" style="float:left;"> 
            <i class="material-icons" style="float: left;">schedule</i> 
            <p class="nav-link" style="float: left;">Last Seen: <%= @tracker.updated_at %></p>
     	</li>
-      <%= link_to tracker_metrics_path(tracker_id: @tracker.id), class:"nav-link",style:"float: left;" do %>
-         <i class="material-icons" style="float: left;">trending_up</i> 
-         <p style="float: left;"> Metrics for Device </p>
+      <%= link_to tracker_metrics_path(tracker_id: @tracker.id), class:"nav-link nav-item btn-success",style:"float: left;" do %>
+        Metrics for Device
       <% end %>      				    	
 	  </ul>
 	</div>
